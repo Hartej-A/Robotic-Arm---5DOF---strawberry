@@ -1,0 +1,107 @@
+#include <Servo.h>
+
+//variables for motors
+Servo Base;
+Servo LowArm;
+Servo TopArm;
+Servo Spin;
+Servo Claw;
+
+//positions of motors on arduino
+int basePos = 7;
+int lowPos = 6;
+  int topPos = 5;
+int spinPos = 4;
+int clawPos = 3;
+
+
+void setup() {
+  //starting positions
+  Base.attach(basePos);
+  LowArm.attach(lowPos);
+  TopArm.attach(topPos);
+  Spin.attach(spinPos);
+  Claw.attach(clawPos);
+
+
+//start
+  Base.writeMicroseconds(800);
+  LowArm.writeMicroseconds(1100);
+  TopArm.writeMicroseconds(700);
+  Spin.writeMicroseconds(500);
+  Claw.writeMicroseconds(500);
+
+//grab
+  delay(3000);
+  Claw.writeMicroseconds(950);
+  delay(1000);
+
+
+//move 90 degrees
+  for(int i=800; i<=1490; i+=3){
+    Base.writeMicroseconds(i);
+    delay(10);
+  }
+  delay(3000);
+
+//dip
+  for(int i=1100; i<=1200; i+=1)
+  {
+    LowArm.writeMicroseconds(i);
+    delay(10);
+  }
+  delay(1000);
+
+  for(int i=1200; i>=1100; i-=1)
+  {
+    LowArm.writeMicroseconds(i);
+    delay(10);
+  } 
+  delay(2000);
+ 
+//shake off excess chocolate
+  for(int j=0; j<10; j++){
+    Spin.writeMicroseconds(1140);
+    delay(200);
+    Spin.writeMicroseconds(1190);
+    delay(200);
+  }
+  delay(2000);
+
+//rotate 90 degrees
+  for(int i=1490; i<=2160; i+=3){
+    Base.writeMicroseconds(i);
+    delay(10);
+  }
+  delay(1000);
+
+//place
+  for(int i=700; i<=800; i+=2){
+    TopArm.writeMicroseconds(i);
+    delay(10);
+  }
+  delay(1000);
+
+  Spin.writeMicroseconds(1166);
+  delay(2000);
+  Claw.writeMicroseconds(500);
+  delay(3000);
+
+
+//go back to starting positions
+  for(int i=800; i>=700; i-=2){
+    TopArm.writeMicroseconds(i);
+    delay(10);
+  }
+
+  for(int i=2160; i>=800; i-=3){
+    Base.writeMicroseconds(i);
+    delay(10);
+  }
+ 
+}
+
+
+void loop() {
+  
+}
